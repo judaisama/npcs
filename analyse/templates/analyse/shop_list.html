@@ -1,0 +1,62 @@
+{% extends 'analyse/base.html' %}
+{% block main %}
+    <div class="x_panel">
+        <div class="x_title"><h2>商品列表</h2>
+            <form action="{% url 'good_list' %}" method="get">
+                <div class="form-group pull-right top_search">
+                    <div class="input-group">
+                    <input name="goodname" type="text" class="form-control" placeholder="输入商品名：">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">Go!</button>
+                    </span>
+                    </div>
+                </div>
+            </form>
+            <div class="clearfix"></div></div>
+        <div class="x_content">
+            <div class="table-responsive">
+              <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                  <tr class="headings">
+                    <th class="column-title" nowrap="nowrap">商品名</th>
+                    <th class="column-title" nowrap="nowrap">店铺名</th>
+                    <th class="column-title" nowrap="nowrap">价格</th>
+                    <th class="column-title" nowrap="nowrap">销量</th>
+                    <th class="column-title" nowrap="nowrap">选项</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                {% for contact in contacts %}
+                <tr class="even pointer">
+                    <td><a style=" text-decoration: none;" href="{% url 'good_detail' contact.goodid %}">{{ contact.goodsname }}</a></td>
+                    <td>{{ contact.goodshop }}</td>
+                    <td>{{ contact.goodprice }}</td>
+                    <td>{{ contact.comment_num }}</td>
+                    <td>
+                        <a style=" text-decoration: none;" href="{% url 'comment_one_good' contact.goodid %}">查看已有评价</a>
+                        <a style=" text-decoration: none;" href="{{ contact.goodurl }}" target="_blank">前往京东</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+                <div class="pagination">
+                <span class="step-links">
+                    {% if contacts.has_previous %}
+                        <a href="?page={{ contacts.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                    </span>
+
+                    {% if contacts.has_next %}
+                        <a href="?page={{ contacts.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock main%}

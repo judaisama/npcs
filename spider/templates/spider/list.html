@@ -1,0 +1,37 @@
+{% extends 'analyse/base.html' %}
+{% block main %}
+    <div class="x_panel">
+        <div class="x_title"><h2>爬虫管理</h2><div class="clearfix"></div></div>
+        <div class="x_content">
+            <div class="table-responsive">
+              <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                  <tr class="headings">
+                    <th class="column-title" nowrap="nowrap">爬虫名</th>
+                    <th class="column-title" nowrap="nowrap">爬虫描述</th>
+                    <th class="column-title" nowrap="nowrap">爬虫状态</th>
+                    <th class="column-title" nowrap="nowrap">操作</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                {% for i in cfg %}
+                <tr class="even pointer">
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.description }}</td>
+                    <td>{{ i.get_status_display }}</td>
+                    <td>{% if i.status == 0 %}
+                            <a href="{% url 'spider_start' i.id%}">开启</a>
+                        {% endif %}
+                        {% if i.status == 1 %}
+                            <a href="{% url 'spider_stop' i.id%}">关闭</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

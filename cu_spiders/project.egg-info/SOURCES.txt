@@ -1,0 +1,13 @@
+setup.py
+cu_spiders/__init__.py
+cu_spiders/items.py
+cu_spiders/middlewares.py
+cu_spiders/pipelines.py
+cu_spiders/settings.py
+cu_spiders/spiders/__init__.py
+cu_spiders/spiders/jd_spider.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt

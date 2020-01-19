@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="/static/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/static/build/css/custom.min.css" rel="stylesheet">
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+          <section class="login_content">
+            <form class='form-login' action="{% url 'user_login' %}" method="post" id="form-login">
+                {% csrf_token %}
+              <h1>中国联通产品对比系统</h1>
+              <div>
+                <input type="text" name="username"  class="form-control" placeholder="用户名" required="" />
+              </div>
+              <div>
+                <input name="password" type="password" class="form-control" placeholder="密码" required="" />
+              </div>
+              <div>
+                  <button type="reset" class="btn btn-primary pull-left">重置</button>
+                  <button type="submit" class="btn btn-success pull-right">登录</button>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">还没账号?
+                  <a href="#signup" class="to_register"> 注册账户 </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <p>制作人：中国联通温泉培训基地五班一组</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div id="register" class="animate form registration_form">
+          <section class="login_content">
+            <form class='form-register' action="{% url 'user_register' %}" method="post" id="form-register">
+                {% csrf_token %}
+              <h1>账户创建</h1>
+              <div>
+                <input type="text" name='username' class="form-control" id="id_username" placeholder="用户名" required="">
+              </div>
+              <div>
+                <input name="password" type="password" class="form-control" placeholder="密码" required="" />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-success pull-center">注册</button>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <p class="change_link">已有帐号?
+                  <a href="#signin" class="to_register"> 登录账户 </a>
+                </p>
+
+                <div class="clearfix"></div>
+                <br />
+
+                <div>
+                  <p>制作人：中国联通温泉培训基地五班一组</p>
+                </div>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

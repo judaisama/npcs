@@ -1,0 +1,38 @@
+{% extends 'analyse/base.html' %}
+{% block main %}
+    <div class="clearfix"></div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>用户评论情感分析</h2>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <br />
+            <form class='form-login' action="{% url 'sentiment_list' %}" method="post" id="form-login">
+                {% csrf_token %}
+              <div class="item form-group">
+                <div class="col-md-12 col-sm-12 ">
+                    <textarea required="required" class="form-control" name="content" placeholder="请输入用户评论："></textarea>
+                </div>
+              </div>
+                <div class="col-md-12 col-sm-12" align="center">
+                  <button type="submit" class="btn btn-success">进行情感分析</button>
+                </div>
+            </form>
+        {% if message %}
+            <div class="col-md-12 col-sm-12" >
+                <h2>系统对评论“{{ content }}”分析结果为： </h2>
+                <h1>
+                    {% if message == '满意' %}<div class="count green">{{ message }}</div>{% endif %}
+                    {% if message == '一般' %}<div class="count yellow">{{ message }}</div>{% endif %}
+                    {% if message == '不满意' %}<div class="count red">{{ message }}</div>{% endif %}
+                </h1>
+            </div>
+        {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

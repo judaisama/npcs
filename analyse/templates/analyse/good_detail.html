@@ -1,0 +1,46 @@
+{% extends 'analyse/base.html' %}
+{% block main %}
+    <div class="x_panel">
+        <div class="x_title"><h2><a href="#" onclick="javascript:history.back(-1);"><i class="fa fa-arrow-left"></i></a>&nbsp;&nbsp;商品详情</h2><div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <td colspan="2">商品名：{{ good.goodsname }}</td>
+                </tr>
+                <tr>
+                    <td>商品编号：{{ good.goodid }}</td>
+                    <td>商铺名：{{ good.goodshop }}</td>
+                </tr>
+
+                <tr>
+                    <td>商品价格：{{ good.goodprice }}</td>
+                    <td>商品链接：<a href="{{ good.goodurl }}" target="_blank">{{ good.goodurl }}</a></td>
+                </tr>
+                <tr>
+                    <td>运营商类别：{{ good.get_type_display }}</td>
+                    <td>商品类别：{{ good.get_good_type_display }}</td>
+                </tr>
+                <tr>
+                    <td>总评价数：{{ good.comment_num }}</td>
+                    <td>好评率：{{ good.goodrate }}</td>
+                </tr>
+                <tr>
+                    <td>默认好评数：{{ good.comment_default_num }}</td>
+                    <td>5星评价数：{{ good.score5_num }}</td>
+                </tr>
+                <tr>
+                    <td>4星评价数：{{ good.score4_num }}</td>
+                    <td>3星评价数：{{ good.score3_num }}</td>
+                </tr>
+                <tr>
+                    <td>2星评价数：{{ good.score2_num }}</td>
+                    <td>1星评价数：{{ good.score1_num }}</td>
+                </tr>
+
+            </table>
+            </div>
+        </div>
+    </div>
+{% endblock main%}

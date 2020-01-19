@@ -1,0 +1,666 @@
+{% extends 'analyse/base.html' %}
+{% block top_tiles %}
+    <div class="tile_count">
+        <div class="col-md-3 col-sm-4  tile_stats_count">
+          <span class="count_top"><i class="fa fa-database">&nbsp;</i>官方旗舰店商品总数</span>
+          <div class="count red">{{total.0}}</div>
+        </div>
+        <div class="col-md-3 col-sm-4  tile_stats_count">
+          <span class="count_top"><i class="fa fa-database">&nbsp;</i>官方旗舰店商品总销量数</span>
+          <div class="count red">{{total.1}}</div>
+        </div>
+        <div class="col-md-3 col-sm-4  tile_stats_count">
+          <span class="count_top"><i class="fa fa-database">&nbsp;</i>官方旗舰店铺总数</span>
+          <div class="count red">{{total.2}}</div>
+        </div>
+        <div class="col-md-3 col-sm-4  tile_stats_count">
+          <span class="count_top"><i class="fa fa-database">&nbsp;</i>已爬取评论总数</span>
+          <div class="count red">{{total.3}}</div>
+        </div>
+      </div>
+{% endblock %}
+{% block main %}
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel fixed_height_320">
+          <div class="x_title">
+            <h2>三大运营商官方旗舰店各类商品销量条形统计图</h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+              </ul>
+            <div class="clearfix"></div>
+          </div>
+            <div class="x_content">
+                <div id="chart1" style="height: 300%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-4 col-sm-4 ">
+        <div class="x_panel tile fixed_height_320">
+            <div class="x_title">
+                <h2>联通各类商品销量占比</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id="chart22" style="height: 250px;"></div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-4 ">
+      <div class="x_panel tile fixed_height_320">
+        <div class="x_title">
+          <h2>移动各类商品销量占比</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div id="chart21" style="height: 250px;"></div>
+            <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-4 ">
+      <div class="x_panel tile fixed_height_320">
+        <div class="x_title">
+          <h2>电信各类商品销量占比</h2>
+          <ul class="nav navbar-right panel_toolbox">
+            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div id="chart23" style="height: 250px;"></div>
+            <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+</div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>中国联通官方旗舰店商品销量top5</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <td nowrap="nowrap">排名</td>
+                        <td>商品名</td>
+                        <td>销量</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for i in top5.0.1 %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row"><a style=" text-decoration: none;" href="{% url 'good_detail' i.goodid %}">{{ i.goodsname }}</a></th>
+                        <td>{{ i.comment_num }}</td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>中国联通官方旗舰店商品好评率top5</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <td nowrap="nowrap">排名</td>
+                        <td>商品名</td>
+                        <td nowrap="nowrap">好评率</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for i in top5.1.1 %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row"><a style=" text-decoration: none;" href="{% url 'good_detail' i.goodid %}">{{ i.goodsname }}</a></th>
+                        <td>{{ i.goodrate }}</td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>中国移动官方旗舰店商品销量top5</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <td nowrap="nowrap">排名</td>
+                        <td>商品名</td>
+                        <td>销量</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for i in top5.0.0 %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row"><a style=" text-decoration: none;" href="{% url 'good_detail' i.goodid %}">{{ i.goodsname }}</a></th>
+                        <td>{{ i.comment_num }}</td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>中国移动官方旗舰店商品好评率top5</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <td nowrap="nowrap">排名</td>
+                        <td>商品名</td>
+                        <td nowrap="nowrap">好评率</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for i in top5.1.0 %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row"><a style=" text-decoration: none;" href="{% url 'good_detail' i.goodid %}">{{ i.goodsname }}</a></th>
+                        <td>{{ i.goodrate }}</td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>中国电信官方旗舰店商品销量top5</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <td nowrap="nowrap">排名</td>
+                        <td>商品名</td>
+                        <td>销量</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for i in top5.0.2 %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row"><a style=" text-decoration: none;" href="{% url 'good_detail' i.goodid %}">{{ i.goodsname }}</a></th>
+                        <td>{{ i.comment_num }}</td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel tile fixed_height_400">
+              <div class="x_title">
+                <h2>中国电信官方旗舰店商品好评率top5</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                  <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                  <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                        <td nowrap="nowrap">排名</td>
+                        <td>商品名</td>
+                        <td nowrap="nowrap">好评率</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                {% for i in top5.1.2 %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th scope="row"><a style=" text-decoration: none;" href="{% url 'good_detail' i.goodid %}">{{ i.goodsname }}</a></th>
+                        <td>{{ i.goodrate }}</td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+{% endblock main%}
+
+{% block js %}
+    <!--三大运营商各类商品销量条形统计图-->
+    <script type="text/javascript">
+        var dom = document.getElementById("chart1");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '堆叠条形图';
+        option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data: ['电话卡','宽带','手机','路由器','其他']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '33%',
+                containLabel: true
+            },
+            xAxis:  {
+                type: 'value'
+            },
+            yAxis: {
+                type: '',
+                data: ['中国移动','中国电信','中国联通']
+            },
+            series: [
+                {
+                    name: '电话卡',
+                    type: 'bar',
+                    stack: '总量',
+                    data: [saledata['cm_goods_dic']['cm_goods_1'],saledata['ct_goods_dic']['ct_goods_1'],saledata['cu_goods_dic']['cu_goods_1']]
+                },
+                {
+                    name: '宽带',
+                    type: 'bar',
+                    stack: '总量',
+                    data: [saledata['cm_goods_dic']['cm_goods_2'],saledata['ct_goods_dic']['ct_goods_2'],saledata['cu_goods_dic']['cu_goods_2']]
+                },
+                {
+                    name: '手机',
+                    type: 'bar',
+                    stack: '总量',
+                    data: [saledata['cm_goods_dic']['cm_goods_3'],saledata['ct_goods_dic']['ct_goods_3'],saledata['cu_goods_dic']['cu_goods_3']]
+                },
+                {
+                    name: '路由器',
+                    type: 'bar',
+                    stack: '总量',
+                    data: [saledata['cm_goods_dic']['cm_goods_4'],saledata['ct_goods_dic']['ct_goods_4'],saledata['cu_goods_dic']['cu_goods_4']]
+                },
+                {
+                    name: '其他',
+                    type: 'bar',
+                    stack: '总量',
+                    data: [saledata['cm_goods_dic']['cm_goods_5'],saledata['ct_goods_dic']['ct_goods_5'],saledata['cu_goods_dic']['cu_goods_5']]
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+     </script>
+    <!--三大运营商各类商品销量占比饼形统计图-->
+    <script type="text/javascript">
+        var dom = document.getElementById("chart21");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['cm_goods_dic']['cm_goods_1'], name:'电话卡'},
+                        {value:saledata['cm_goods_dic']['cm_goods_2'], name:'宽带'},
+                        {value:saledata['cm_goods_dic']['cm_goods_3'], name:'手机'},
+                        {value:saledata['cm_goods_dic']['cm_goods_4'], name:'路由器'},
+                        {value:saledata['cm_goods_dic']['cm_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        var dom = document.getElementById("chart22");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['cu_goods_dic']['cu_goods_1'], name:'电话卡'},
+                        {value:saledata['cu_goods_dic']['cu_goods_2'], name:'宽带'},
+                        {value:saledata['cu_goods_dic']['cu_goods_3'], name:'手机'},
+                        {value:saledata['cu_goods_dic']['cu_goods_4'], name:'路由器'},
+                        {value:saledata['cu_goods_dic']['cu_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        var dom = document.getElementById("chart23");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['ct_goods_dic']['ct_goods_1'], name:'电话卡'},
+                        {value:saledata['ct_goods_dic']['ct_goods_2'], name:'宽带'},
+                        {value:saledata['ct_goods_dic']['ct_goods_3'], name:'手机'},
+                        {value:saledata['ct_goods_dic']['ct_goods_4'], name:'路由器'},
+                        {value:saledata['ct_goods_dic']['ct_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <!--三大运营商各类商品销量top5条形统计图-->
+    <script type="text/javascript">
+        var dom = document.getElementById("chart31");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['cm_goods_dic']['cm_goods_1'], name:'电话卡'},
+                        {value:saledata['cm_goods_dic']['cm_goods_2'], name:'宽带'},
+                        {value:saledata['cm_goods_dic']['cm_goods_3'], name:'手机'},
+                        {value:saledata['cm_goods_dic']['cm_goods_4'], name:'路由器'},
+                        {value:saledata['cm_goods_dic']['cm_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        var dom = document.getElementById("chart32");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['cu_goods_dic']['cu_goods_1'], name:'电话卡'},
+                        {value:saledata['cu_goods_dic']['cu_goods_2'], name:'宽带'},
+                        {value:saledata['cu_goods_dic']['cu_goods_3'], name:'手机'},
+                        {value:saledata['cu_goods_dic']['cu_goods_4'], name:'路由器'},
+                        {value:saledata['cu_goods_dic']['cu_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        var dom = document.getElementById("chart33");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['ct_goods_dic']['ct_goods_1'], name:'电话卡'},
+                        {value:saledata['ct_goods_dic']['ct_goods_2'], name:'宽带'},
+                        {value:saledata['ct_goods_dic']['ct_goods_3'], name:'手机'},
+                        {value:saledata['ct_goods_dic']['ct_goods_4'], name:'路由器'},
+                        {value:saledata['ct_goods_dic']['ct_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <!--三大运营商各类商品好评率top5条形统计图-->
+    <script type="text/javascript">
+        var dom = document.getElementById("chart41");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['cm_goods_dic']['cm_goods_1'], name:'电话卡'},
+                        {value:saledata['cm_goods_dic']['cm_goods_2'], name:'宽带'},
+                        {value:saledata['cm_goods_dic']['cm_goods_3'], name:'手机'},
+                        {value:saledata['cm_goods_dic']['cm_goods_4'], name:'路由器'},
+                        {value:saledata['cm_goods_dic']['cm_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        var dom = document.getElementById("chart42");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['cu_goods_dic']['cu_goods_1'], name:'电话卡'},
+                        {value:saledata['cu_goods_dic']['cu_goods_2'], name:'宽带'},
+                        {value:saledata['cu_goods_dic']['cu_goods_3'], name:'手机'},
+                        {value:saledata['cu_goods_dic']['cu_goods_4'], name:'路由器'},
+                        {value:saledata['cu_goods_dic']['cu_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        var dom = document.getElementById("chart43");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var saledata = JSON.parse('{{ data|safe }}');
+        option = null;
+        app.title = '扇形图';
+        option = {
+            series : [
+                {
+                    name: '销量',
+                    type: 'pie',
+                    radius : '60%',
+                    data:[
+                        {value:saledata['ct_goods_dic']['ct_goods_1'], name:'电话卡'},
+                        {value:saledata['ct_goods_dic']['ct_goods_2'], name:'宽带'},
+                        {value:saledata['ct_goods_dic']['ct_goods_3'], name:'手机'},
+                        {value:saledata['ct_goods_dic']['ct_goods_4'], name:'路由器'},
+                        {value:saledata['ct_goods_dic']['ct_goods_5'], name:'其他'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+{% endblock %}

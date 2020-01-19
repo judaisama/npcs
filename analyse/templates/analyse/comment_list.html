@@ -1,0 +1,51 @@
+{% extends 'analyse/base.html' %}
+{% block main %}
+    <div class="x_panel">
+        <div class="x_title"><h2><a href="#" onclick="javascript:history.back(-1);"><i class="fa fa-arrow-left"></i></a>&nbsp;&nbsp;评论列表</h2><div class="clearfix"></div></div>
+        <div class="x_content">
+            <div class="table-responsive">
+              <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                  <tr class="headings">
+                    <th class="column-title" nowrap="nowrap">用户名</th>
+                    <th class="column-title" nowrap="nowrap">评论</th>
+                    <th class="column-title" nowrap="nowrap">日期</th>
+                    <th class="column-title" nowrap="nowrap">评分</th>
+                    <th class="column-title" nowrap="nowrap">评论商品</th>
+                    <th class="column-title" nowrap="nowrap">态度</th>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                {% for contact in contacts %}
+                <tr class="even pointer">
+                    <td>{{ contact.user_info }}</td>
+                    <td>{{ contact.deal_content }}</td>
+                    <td nowrap="nowrap">{{ contact.deal_date }}</td>
+                    <td>{{ contact.star }}</td>
+                    <td><a href="{% url 'good_detail' contact.good_id_id %}">查看详情</a></td>
+                    <td>{{ contact.get_sentiment_display }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+                <div class="pagination">
+                <span class="step-links">
+                    {% if contacts.has_previous %}
+                        <a href="?page={{ contacts.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                    </span>
+
+                    {% if contacts.has_next %}
+                        <a href="?page={{ contacts.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock main%}
